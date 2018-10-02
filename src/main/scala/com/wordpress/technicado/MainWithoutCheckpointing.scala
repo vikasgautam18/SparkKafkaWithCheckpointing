@@ -16,7 +16,7 @@ object MainWithoutCheckpointing {
     val ssc: StreamingContext = new StreamingContext(conf, Seconds(10))
 
     val kafkaParams: Map[String, Object] = Map[String, Object](
-      "bootstrap.servers" -> "localhost:9092",
+      "bootstrap.servers" -> "0.0.0.0:6667",
       "key.deserializer" -> classOf[StringDeserializer],
       "value.deserializer" -> classOf[StringDeserializer],
       "group.id" -> "some_group",
