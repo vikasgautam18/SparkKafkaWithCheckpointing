@@ -40,7 +40,7 @@ object MainWithCheckpointing {
     ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG -> classOf[StringSerializer],
     ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG -> classOf[StringSerializer])
 
-    val producer = new KafkaProducer[String, String](writerProps.asJava)
+
     val input_topic: Array[String] = Array("test_source_topic")
     val output_topic = "test_target_topic"
     val stream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream[String, String](
@@ -55,6 +55,7 @@ object MainWithCheckpointing {
 
     inputStream.foreachRDD(rdd => {
       rdd.foreachPartition(iter => {
+        val producer = new KafkaProducer[String, String](writerProps.asJava)
         iter.foreach(pair => {
           producer.send(new ProducerRecord[String, String](output_topic, pair._1, pair._2))
         })
