@@ -9,7 +9,7 @@ import org.apache.spark.streaming.kafka010.KafkaUtils
 import org.apache.spark.streaming.kafka010.LocationStrategies.PreferConsistent
 import collection.JavaConverters._
 
-class KafkaUtility {
+class KafkaUtility extends Serializable {
 
   def getKafkaDStream[K, V](ssc: StreamingContext,
                               readParams: Map[String, Object],
